@@ -21,16 +21,16 @@ const createTeam = () => {
 <template>
     <FormSection @submitted="createTeam">
         <template #title>
-            Team Details
+            {{ $t('lang.team_details') }}
         </template>
 
         <template #description>
-            Create a new team to collaborate with others on projects.
+            {{ $t('lang.pages.teams.description') }}
         </template>
 
         <template #form>
             <div class="col-span-6">
-                <InputLabel value="Team Owner" />
+                <InputLabel :value="$t('lang.team_owner')" />
 
                 <div class="flex items-center mt-2">
                     <img class="object-cover w-12 h-12 rounded-full" :src="$page.props.auth.user.profile_photo_url" :alt="$page.props.auth.user.name">
@@ -45,7 +45,7 @@ const createTeam = () => {
             </div>
 
             <div class="col-span-6 sm:col-span-4">
-                <InputLabel for="name" value="Team Name" />
+                <InputLabel for="name" :value="$t('lang.team_name')" />
                 <TextInput
                     id="name"
                     v-model="form.name"
@@ -59,7 +59,7 @@ const createTeam = () => {
 
         <template #actions>
             <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                Create
+                {{ $t('lang.create') }}
             </PrimaryButton>
         </template>
     </FormSection>

@@ -10,10 +10,10 @@ defineProps({
 </script>
 
 <template>
-    <AppLayout title="API Tokens">
+    <AppLayout :title="$t('lang.pages.api_tokens.title')">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                API Tokens
+                {{ $t('lang.pages.api_tokens.title') }}
             </h2>
         </template>
 

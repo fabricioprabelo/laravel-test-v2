@@ -100,23 +100,23 @@ const displayableRole = (role) => {
             <!-- Add Team Member -->
             <FormSection @submitted="addTeamMember">
                 <template #title>
-                    Add Team Member
+                    {{ $t('lang.pages.teams.team_settings.add_member') }}
                 </template>
 
                 <template #description>
-                    Add a new team member to your team, allowing them to collaborate with you.
+                    {{ $t('lang.pages.teams.team_settings.add_member_description') }}
                 </template>
 
                 <template #form>
                     <div class="col-span-6">
                         <div class="max-w-xl text-sm text-gray-600 dark:text-gray-400">
-                            Please provide the email address of the person you would like to add to this team.
+                            {{ $t('lang.pages.teams.team_settings.add_member_description2') }}
                         </div>
                     </div>
 
                     <!-- Member Email -->
                     <div class="col-span-6 sm:col-span-4">
-                        <InputLabel for="email" value="Email" />
+                        <InputLabel for="email" :value="$t('lang.email')" />
                         <TextInput
                             id="email"
                             v-model="addTeamMemberForm.email"
@@ -128,7 +128,7 @@ const displayableRole = (role) => {
 
                     <!-- Role -->
                     <div v-if="availableRoles.length > 0" class="col-span-6 lg:col-span-4">
-                        <InputLabel for="roles" value="Role" />
+                        <InputLabel for="roles" :value="$t('lang.role')" />
                         <InputError :message="addTeamMemberForm.errors.role" class="mt-2" />
 
                         <div class="relative z-0 mt-1 border border-gray-200 dark:border-gray-700 rounded-lg cursor-pointer">
@@ -164,11 +164,11 @@ const displayableRole = (role) => {
 
                 <template #actions>
                     <ActionMessage :on="addTeamMemberForm.recentlySuccessful" class="me-3">
-                        Added.
+                        {{ $t('lang.added') }}.
                     </ActionMessage>
 
                     <PrimaryButton :class="{ 'opacity-25': addTeamMemberForm.processing }" :disabled="addTeamMemberForm.processing">
-                        Add
+                        {{ $t('lang.add') }}
                     </PrimaryButton>
                 </template>
             </FormSection>
@@ -180,11 +180,11 @@ const displayableRole = (role) => {
             <!-- Team Member Invitations -->
             <ActionSection class="mt-10 sm:mt-0">
                 <template #title>
-                    Pending Team Invitations
+                    {{ $t('lang.pages.teams.team_settings.pendding_invitations') }}
                 </template>
 
                 <template #description>
-                    These people have been invited to your team and have been sent an invitation email. They may join the team by accepting the email invitation.
+                    {{ $t('lang.pages.teams.team_settings.pendding_invitations_description') }}
                 </template>
 
                 <!-- Pending Team Member Invitation List -->
@@ -202,7 +202,7 @@ const displayableRole = (role) => {
                                     class="cursor-pointer ms-6 text-sm text-red-500 focus:outline-none"
                                     @click="cancelTeamInvitation(invitation)"
                                 >
-                                    Cancel
+                                {{ $t('lang.cancel') }}
                                 </button>
                             </div>
                         </div>
@@ -217,11 +217,11 @@ const displayableRole = (role) => {
             <!-- Manage Team Members -->
             <ActionSection class="mt-10 sm:mt-0">
                 <template #title>
-                    Team Members
+                    {{ $t('lang.pages.teams.team_settings.team_members') }}
                 </template>
 
                 <template #description>
-                    All of the people that are part of this team.
+                    {{ $t('lang.pages.teams.team_settings.team_members_description') }}
                 </template>
 
                 <!-- Team Member List -->
@@ -255,7 +255,7 @@ const displayableRole = (role) => {
                                     class="cursor-pointer ms-6 text-sm text-red-500"
                                     @click="confirmLeavingTeam"
                                 >
-                                    Leave
+                                {{ $t('lang.leave') }}
                                 </button>
 
                                 <!-- Remove Team Member -->
@@ -264,7 +264,7 @@ const displayableRole = (role) => {
                                     class="cursor-pointer ms-6 text-sm text-red-500"
                                     @click="confirmTeamMemberRemoval(user)"
                                 >
-                                    Remove
+                                {{ $t('lang.remove') }}
                                 </button>
                             </div>
                         </div>
@@ -276,7 +276,7 @@ const displayableRole = (role) => {
         <!-- Role Management Modal -->
         <DialogModal :show="currentlyManagingRole" @close="currentlyManagingRole = false">
             <template #title>
-                Manage Role
+                {{ $t('lang.pages.teams.team_settings.manage_role') }}
             </template>
 
             <template #content>
@@ -314,7 +314,7 @@ const displayableRole = (role) => {
 
             <template #footer>
                 <SecondaryButton @click="currentlyManagingRole = false">
-                    Cancel
+                    {{ $t('lang.cancel') }}
                 </SecondaryButton>
 
                 <PrimaryButton
@@ -323,7 +323,7 @@ const displayableRole = (role) => {
                     :disabled="updateRoleForm.processing"
                     @click="updateRole"
                 >
-                    Save
+                {{ $t('lang.save') }}
                 </PrimaryButton>
             </template>
         </DialogModal>
@@ -331,16 +331,16 @@ const displayableRole = (role) => {
         <!-- Leave Team Confirmation Modal -->
         <ConfirmationModal :show="confirmingLeavingTeam" @close="confirmingLeavingTeam = false">
             <template #title>
-                Leave Team
+                {{ $t('lang.pages.teams.team_settings.leave_team') }}
             </template>
 
             <template #content>
-                Are you sure you would like to leave this team?
+                {{ $t('lang.pages.teams.team_settings.leave_team_confirmation') }}
             </template>
 
             <template #footer>
                 <SecondaryButton @click="confirmingLeavingTeam = false">
-                    Cancel
+                    {{ $t('lang.cancel') }}
                 </SecondaryButton>
 
                 <DangerButton
@@ -349,7 +349,7 @@ const displayableRole = (role) => {
                     :disabled="leaveTeamForm.processing"
                     @click="leaveTeam"
                 >
-                    Leave
+                {{ $t('lang.leave') }}
                 </DangerButton>
             </template>
         </ConfirmationModal>
@@ -357,16 +357,16 @@ const displayableRole = (role) => {
         <!-- Remove Team Member Confirmation Modal -->
         <ConfirmationModal :show="teamMemberBeingRemoved" @close="teamMemberBeingRemoved = null">
             <template #title>
-                Remove Team Member
+                {{ $t('lang.pages.teams.team_settings.remove_team_member') }}
             </template>
 
             <template #content>
-                Are you sure you would like to remove this person from the team?
+                {{ $t('lang.pages.teams.team_settings.remove_team_member_confirmation') }}
             </template>
 
             <template #footer>
                 <SecondaryButton @click="teamMemberBeingRemoved = null">
-                    Cancel
+                    {{ $t('lang.cancel') }}
                 </SecondaryButton>
 
                 <DangerButton
@@ -375,7 +375,7 @@ const displayableRole = (role) => {
                     :disabled="removeTeamMemberForm.processing"
                     @click="removeTeamMember"
                 >
-                    Remove
+                {{ $t('lang.remove') }}
                 </DangerButton>
             </template>
         </ConfirmationModal>

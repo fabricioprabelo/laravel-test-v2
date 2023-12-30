@@ -4,10 +4,29 @@
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-import axios from 'axios';
-window.axios = axios;
+import axios from "axios";
+import Lang from "lang.js";
+import Inputmask from "inputmask";
 
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+// Inputmask().mask(document.querySelectorAll("input"));
+
+const lang = new Lang({
+    messages,
+    locale,
+    fallback,
+});
+
+const t = (key, arg1 = 0, arg2 = {}) => {
+    if (typeof arg1 === "object") return lang.get(key, arg1);
+    else if (typeof arg1 === "number" && typeof arg2 === "object")
+        return lang.choice(key, arg1, arg2);
+    else return lang.get(key);
+};
+
+window.t = t;
+window.inputMask = Inputmask;
+window.axios = axios;
+window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

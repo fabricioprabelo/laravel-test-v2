@@ -11,15 +11,15 @@ const emit = defineEmits(['confirmed']);
 defineProps({
     title: {
         type: String,
-        default: 'Confirm Password',
+        default: t('lang.confirm_password'),
     },
     content: {
         type: String,
-        default: 'For your security, please confirm your password to continue.',
+        default: t('lang.confirm_password_description'),
     },
     button: {
         type: String,
-        default: 'Confirm',
+        default: t('lang.confirm'),
     },
 });
 
@@ -90,7 +90,7 @@ const closeModal = () => {
                         v-model="form.password"
                         type="password"
                         class="mt-1 block w-3/4"
-                        placeholder="Password"
+                        :placeholder="$t('lang.password')"
                         autocomplete="current-password"
                         @keyup.enter="confirmPassword"
                     />
@@ -101,7 +101,7 @@ const closeModal = () => {
 
             <template #footer>
                 <SecondaryButton @click="closeModal">
-                    Cancel
+                    {{ $t('lang.cancel') }}
                 </SecondaryButton>
 
                 <PrimaryButton
