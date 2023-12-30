@@ -83,6 +83,20 @@ Route::middleware([
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
+    Route::controller(\App\Http\Controllers\RoomController::class)
+        ->prefix('rooms')
+        ->group(function () {
+            Route::get('/{room}/edit', 'edit')->name('rooms.edit');
+        });
+
+    Route::controller(\App\Http\Controllers\RoomController::class)
+        ->prefix('rooms')
+        ->group(function () {
+            Route::get('/{room}/edit', 'edit')->name('rooms.edit');
+            Route::put('/{room}', 'update')->name('rooms.update');
+            Route::delete('/{room}', 'destroy')->name('rooms.destroy');
+        });
+
     Route::resource('users', \App\Http\Controllers\UserController::class);
     Route::resource('roles', \App\Http\Controllers\RoleController::class);
     Route::resource('hotels', \App\Http\Controllers\HotelController::class);
