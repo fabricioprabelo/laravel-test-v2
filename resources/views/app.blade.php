@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', session()->has('locale') ? session()->get('locale') : app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,12 +9,13 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" />
 
         <!-- Scripts -->
         <script src="{{ route('locale-js') }}"></script>
         <script>
-            const locale = "{{$locale}}";
-            const fallback = "{{$localeFallback}}";
+            var locale = "{{ str_replace('_', '-', session()->has('locale') ? session()->get('locale') : app()->getLocale()) }}";
+            var fallback = "{{ str_replace('_', '-', config('app.fallback_locale')) }}";
         </script>
         @routes
         @vite(['resources/js/app.js', "resources/js/Pages/{$page['component']}.vue"])

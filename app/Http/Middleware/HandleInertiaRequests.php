@@ -32,8 +32,13 @@ class HandleInertiaRequests extends Middleware
     {
         return [
             ...parent::share($request),
-            'ziggy' => fn () => [
-                ...(new Ziggy)->toArray(),
+            'locale' => fn() => session()->has('locale') ?
+                session()->get('locale') :
+                app()->getLocale(),
+            'locale_fallback' => fn() => config('app.fallback_locale'),
+            'available_locales' => fn() => config('app.available_locales'),
+            'ziggy' => fn() => [
+                ...(new Ziggy())->toArray(),
                 'location' => $request->url(),
             ],
         ];

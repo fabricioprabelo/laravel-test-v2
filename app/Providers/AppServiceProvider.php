@@ -2,8 +2,6 @@
 
 namespace App\Providers;
 
-use Inertia\Inertia;
-use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -21,8 +19,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-
-        View::share('locale', str_replace('_', '-', app()->getLocale()));
-        View::share('localeFallback', str_replace('_', '-', config('app.fallback_locale')));
+        //
     }
 }

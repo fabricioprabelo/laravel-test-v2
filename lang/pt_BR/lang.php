@@ -1,6 +1,9 @@
 <?php
 
 return [
+    'language' => 'Idioma',
+    'english' => 'Inglês',
+    'portuguese_brazil' => 'Português (Brasil)',
     'dashboard' => 'Dashboard',
     'team' => 'Equipe',
     'teams' => 'Equipes',
@@ -65,7 +68,7 @@ return [
     'manage_team' => 'Gerenciar equipe',
     'manage_teams' => 'Gerenciar equipes',
     'manage_account' => 'Gerenciar conta',
-    'team_settigs' => 'Configurações de equipe',
+    'team_settings' => 'Configurações de equipe',
     'delete_record_confirm' => 'Tem certeza que deseja remover este registro?',
     'last_use' => 'Última utilização',
     'last_active' => 'Última atividade',
@@ -110,7 +113,7 @@ return [
     'confirm' => 'Confirmar',
     'recovery_code' => 'Código de recuperação',
     'recovery_codes' => 'Códigos de recuperação',
-    'regenarate_recovery_codes' => 'Gerar novos códigos de recuperação',
+    'regenerate_recovery_codes' => 'Gerar novos códigos de recuperação',
     'show_recovery_codes' => 'Mostrar códigos de recuperação',
     'unknown' => 'Desconhecido',
     'done' => 'Pronto',

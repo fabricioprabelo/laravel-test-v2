@@ -120,8 +120,8 @@ return [
     |
     */
     'available_locales' => [
-        'English' => 'en',
         'Portuguese (Brazil)' => 'pt_BR',
+        'English' => 'en',
     ],
 
     /*

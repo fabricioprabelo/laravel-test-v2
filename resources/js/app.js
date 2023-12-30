@@ -1,8 +1,9 @@
 import "./bootstrap";
 import "../css/app.css";
 
+import NProgress from "nprogress";
 import { createApp, h } from "vue";
-import { createInertiaApp } from "@inertiajs/vue3";
+import { createInertiaApp, router } from "@inertiajs/vue3";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy/dist/vue.m";
 import i18n from "./i18n";
@@ -11,6 +12,18 @@ import axios from "./axios";
 import inputmask from "./inputmask";
 
 const appName = import.meta.env.VITE_APP_NAME || "Laravel";
+
+router.on("start", () => NProgress.start());
+router.on("finish", (event) => {
+    if (event.detail.visit.completed) {
+        NProgress.done();
+    } else if (event.detail.visit.interrupted) {
+        NProgress.set(0);
+    } else if (event.detail.visit.cancelled) {
+        NProgress.done();
+        NProgress.remove();
+    }
+});
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
@@ -30,6 +43,9 @@ createInertiaApp({
             .mount(el);
     },
     progress: {
+        delay: 250,
         color: "#4B5563",
+        includeCSS: true,
+        showSpinner: false,
     },
 });

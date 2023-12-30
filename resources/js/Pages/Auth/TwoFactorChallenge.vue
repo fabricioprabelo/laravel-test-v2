@@ -80,6 +80,7 @@ const submit = () => {
                     type="text"
                     class="mt-1 block w-full"
                     autocomplete="one-time-code"
+                    autofocus
                 />
                 <InputError class="mt-2" :message="form.errors.recovery_code" />
             </div>

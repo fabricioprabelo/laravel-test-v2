@@ -7,6 +7,7 @@ import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
+import LanguageSelector from "@/Components/LanguageSelector.vue";
 
 defineProps({
     title: String,
@@ -66,6 +67,9 @@ const logout = () => {
 
                         <div class="hidden sm:flex sm:items-center sm:ms-6">
                             <div class="ms-3 relative">
+                                <LanguageSelector />
+                            </div>
+                            <div class="ms-3 relative">
                                 <!-- Teams Dropdown -->
                                 <Dropdown v-if="$page.props.jetstream.hasTeamFeatures" align="right" width="60">
                                     <template #trigger>
@@ -89,7 +93,7 @@ const logout = () => {
 
                                             <!-- Team Settings -->
                                             <DropdownLink :href="route('teams.show', $page.props.auth.user?.current_team || 'x')">
-                                                {{ $t('lang.team_settigs') }}
+                                                {{ $t('lang.team_settings') }}
                                             </DropdownLink>
 
                                             <DropdownLink v-if="$page.props.jetstream.canCreateTeams" :href="route('teams.create')">
@@ -249,7 +253,7 @@ const logout = () => {
 
                                 <!-- Team Settings -->
                                 <ResponsiveNavLink :href="route('teams.show', $page.props.auth.user?.current_team || 'x')" :active="route().current('teams.show')">
-                                    {{ $t('lang.team_settigs') }}
+                                    {{ $t('lang.team_settings') }}
                                 </ResponsiveNavLink>
 
                                 <ResponsiveNavLink v-if="$page.props.jetstream.canCreateTeams" :href="route('teams.create')" :active="route().current('teams.create')">

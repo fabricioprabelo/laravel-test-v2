@@ -10,11 +10,30 @@ import Inputmask from "inputmask";
 
 // Inputmask().mask(document.querySelectorAll("input"));
 
+axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
+
+window.axios = axios;
+
 const lang = new Lang({
     messages,
     locale,
     fallback,
 });
+
+async function handleCurrentLocale() {
+    await axios
+        .get("/current-locale")
+        .then(({ data }) => {
+            const { locale, fallback_locale, messages } = data;
+            lang.setMessages(messages);
+            lang.setLocale(locale);
+            lang.setFallback(fallback_locale);
+            window.lang = lang;
+        })
+        .catch((err) => console.log(err.message));
+}
+
+window.handleCurrentLocale = handleCurrentLocale;
 
 const t = (key, arg1 = 0, arg2 = {}) => {
     if (typeof arg1 === "object") return lang.get(key, arg1);
@@ -24,9 +43,8 @@ const t = (key, arg1 = 0, arg2 = {}) => {
 };
 
 window.t = t;
+window.lang = lang;
 window.inputMask = Inputmask;
-window.axios = axios;
-window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

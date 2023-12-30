@@ -223,7 +223,7 @@ const disableTwoFactorAuthentication = () => {
                             v-if="recoveryCodes.length === 0 && ! confirming"
                             class="me-3"
                         >
-                        {{ $t('lang_show_recovery_codes') }}
+                        {{ $t('lang.show_recovery_codes') }}
                         </SecondaryButton>
                     </ConfirmsPassword>
 
