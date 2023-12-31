@@ -130,6 +130,7 @@ return [
     'hello' => 'Hello',
     'regards' => 'Regards',
     'open_in_browser' => 'If you are having trouble clicking the ":actionText" button, copy and paste the URL below into your browser:',
+    'delete_successfully' => 'Record deleted succefully.',
     'pages' => [
         'profile' => [
             'title' => 'Profile informations',

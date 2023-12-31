@@ -7,43 +7,80 @@
 import axios from "axios";
 import Lang from "lang.js";
 import Inputmask from "inputmask";
+import locales from "./locales";
+import Swal from "sweetalert2";
 
 // Inputmask().mask(document.querySelectorAll("input"));
 
 axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 
-window.axios = axios;
-
 const lang = new Lang({
-    messages,
+    messages: locales,
     locale,
-    fallback,
+    fallback: localeFallback,
 });
 
-async function handleCurrentLocale() {
-    await axios
-        .get("/current-locale")
-        .then(({ data }) => {
-            const { locale, fallback_locale, messages } = data;
-            lang.setMessages(messages);
-            lang.setLocale(locale);
-            lang.setFallback(fallback_locale);
-            window.lang = lang;
-        })
-        .catch((err) => console.log(err.message));
-}
-
-window.handleCurrentLocale = handleCurrentLocale;
+window.lang = lang;
 
 const t = (key, arg1 = 0, arg2 = {}) => {
-    if (typeof arg1 === "object") return lang.get(key, arg1);
+    if (typeof arg1 === "object") return window.lang.get(key, arg1);
     else if (typeof arg1 === "number" && typeof arg2 === "object")
-        return lang.choice(key, arg1, arg2);
-    else return lang.get(key);
+        return window.lang.choice(key, arg1, arg2);
+    else return window.lang.get(key);
+};
+
+const element = (selector) => document.querySelector(selector);
+
+const getData = async (url, params = {}) =>
+    await axios({
+        url,
+        method: "get",
+        params,
+    });
+
+const postData = async (url, data = {}) => {
+    const csrf = element('meta[name="csrf-token"]');
+    return await axios({
+        url,
+        method: "post",
+        headers: { "X-CSRF-TOKEN": csrf.content },
+        data,
+    });
+};
+
+const putData = async (url, data = {}) => {
+    const csrf = element('meta[name="csrf-token"]');
+    return await axios({
+        url,
+        method: "post",
+        headers: { "X-CSRF-TOKEN": csrf.content },
+        data: {
+            ...data,
+            _method: "PUT",
+        },
+    });
+};
+
+const deleteData = async (url, data = {}) => {
+    const csrf = element('meta[name="csrf-token"]');
+    return await axios({
+        url,
+        method: "post",
+        headers: { "X-CSRF-TOKEN": csrf.content },
+        data: {
+            ...data,
+            _method: "DELETE",
+        },
+    });
 };
 
 window.t = t;
-window.lang = lang;
+window.Swal = Swal;
+window.axios = axios;
+window.getData = getData;
+window.postData = postData;
+window.putData = putData;
+window.deleteData = deleteData;
 window.inputMask = Inputmask;
 
 /**

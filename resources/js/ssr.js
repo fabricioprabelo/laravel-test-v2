@@ -9,6 +9,11 @@ import i18n from "./i18n";
 import capitalize from "./capitalize";
 import axios from "./axios";
 import inputmask from "./inputmask";
+import { OhVueIcon, addIcons } from "oh-vue-icons";
+import { HiLightningBolt, HiTrash, HiPencilAlt } from "oh-vue-icons/icons/hi";
+import Vue3Toastify from "vue3-toastify";
+
+addIcons(HiLightningBolt, HiTrash, HiPencilAlt);
 
 const appName = import.meta.env.VITE_APP_NAME || "Laravel";
 
@@ -44,6 +49,10 @@ createServer((page) =>
                 .use(i18n)
                 .use(capitalize)
                 .use(axios)
+                .component("VIcon", OhVueIcon)
+                .use(Vue3Toastify, {
+                    autoClose: 3000,
+                })
                 .use(inputmask);
         },
         progress: {

@@ -10,10 +10,10 @@ class RoomController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('role_or_permission:' . PermissionEnum::HOTEL_UPDATE->value)
-            ->only(['edit', 'update']);
-        $this->middleware('role_or_permission:' . PermissionEnum::HOTEL_DELETE->value)
-            ->only(['destroy']);
+        // $this->middleware('role_or_permission:' . PermissionEnum::HOTEL_UPDATE->value)
+        //     ->only(['edit', 'update']);
+        // $this->middleware('role_or_permission:' . PermissionEnum::HOTEL_DELETE->value)
+        //     ->only(['destroy']);
     }
 
     /**

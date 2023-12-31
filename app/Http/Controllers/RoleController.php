@@ -15,14 +15,14 @@ class RoleController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('role_or_permission:' . PermissionEnum::ROLE_LIST->value)
-            ->only(['index']);
-        $this->middleware('role_or_permission:' . PermissionEnum::ROLE_CREATE->value)
-            ->only(['create', 'store']);
-        $this->middleware('role_or_permission:' . PermissionEnum::ROLE_UPDATE->value)
-            ->only(['show', 'edit', 'update']);
-        $this->middleware('role_or_permission:' . PermissionEnum::ROLE_DELETE->value)
-            ->only(['destroy']);
+        // $this->middleware('role_or_permission:' . PermissionEnum::ROLE_LIST->value)
+        //     ->only(['index']);
+        // $this->middleware('role_or_permission:' . PermissionEnum::ROLE_CREATE->value)
+        //     ->only(['create', 'store']);
+        // $this->middleware('role_or_permission:' . PermissionEnum::ROLE_UPDATE->value)
+        //     ->only(['show', 'edit', 'update']);
+        // $this->middleware('role_or_permission:' . PermissionEnum::ROLE_DELETE->value)
+        //     ->only(['destroy']);
     }
     /**
      * Display a listing of the resource.

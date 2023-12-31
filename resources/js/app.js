@@ -10,8 +10,18 @@ import i18n from "./i18n";
 import capitalize from "./capitalize";
 import axios from "./axios";
 import inputmask from "./inputmask";
+import { OhVueIcon, addIcons } from "oh-vue-icons";
+import {
+    HiLightningBolt,
+    HiTrash,
+    HiPencilAlt,
+    CoSave,
+} from "oh-vue-icons/icons";
+import Vue3Toastify, { toast } from "vue3-toastify";
 
 const appName = import.meta.env.VITE_APP_NAME || "Laravel";
+
+addIcons(HiLightningBolt, HiTrash, HiPencilAlt, CoSave);
 
 router.on("start", () => NProgress.start());
 router.on("finish", (event) => {
@@ -40,6 +50,14 @@ createInertiaApp({
             .use(capitalize)
             .use(axios)
             .use(inputmask)
+            .component("VIcon", OhVueIcon)
+            .use(Vue3Toastify, {
+                autoClose: 3000,
+                newestOnTop: true,
+                pauseOnHover: true,
+                limit: 3,
+                position: toast.POSITION.TOP_RIGHT,
+            })
             .mount(el);
     },
     progress: {

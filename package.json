@@ -24,6 +24,8 @@
         "inputmask": "^5.0.8",
         "lang.js": "^1.1.14",
         "nprogress": "^0.2.0",
-        "sweetalert2": "^11.10.2"
+        "oh-vue-icons": "^1.0.0-rc3",
+        "sweetalert2": "^11.10.2",
+        "vue3-toastify": "^0.2.1"
     }
 }

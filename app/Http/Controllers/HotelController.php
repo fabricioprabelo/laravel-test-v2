@@ -7,29 +7,40 @@ use App\Http\Requests\StoreHotelRequest;
 use App\Http\Requests\UpdateHotelRequest;
 use App\Models\Hotel;
 use Exception;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
 
 class HotelController extends Controller
 {
-    public function __construct()
-    {
-        // $this->middleware('role_or_permission:' . PermissionEnum::HOTEL_LIST->value)
-        //     ->only(['index']);
-        // $this->middleware('role_or_permission:' . PermissionEnum::HOTEL_CREATE->value)
-        //     ->only(['create', 'store']);
-        // $this->middleware('role_or_permission:' . PermissionEnum::HOTEL_UPDATE->value)
-        //     ->only(['show', 'edit', 'update']);
-        // $this->middleware('role_or_permission:' . PermissionEnum::HOTEL_DELETE->value)
-        //     ->only(['destroy']);
-    }
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $this->authorize(Hotel::class, PermissionEnum::HOTEL_READ->value);
+
+        $user = $request->user();
+        $team = $user?->currentTeam;
+        $can = [
+            'create' => $user->hasTeamPermission(
+                $team,
+                PermissionEnum::HOTEL_CREATE->value
+            ),
+            'update' => $user->hasTeamPermission(
+                $team,
+                PermissionEnum::HOTEL_UPDATE->value
+            ),
+            'delete' => $user->hasTeamPermission(
+                $team,
+                PermissionEnum::HOTEL_DELETE->value
+            ),
+        ];
+
         $hotels = Hotel::with(['rooms'])->paginate();
 
-        return view('hotels.index', compact('hotels'));
+        return Inertia::render('Hotels/Show', compact('hotels', 'can'));
     }
 
     /**
@@ -37,6 +48,7 @@ class HotelController extends Controller
      */
     public function create()
     {
+        $this->authorizeResource(Hotel::class, PermissionEnum::HOTEL_CREATE->value);
         return view('hotels.create');
     }
 
@@ -45,6 +57,8 @@ class HotelController extends Controller
      */
     public function store(StoreHotelRequest $request)
     {
+        $this->authorizeResource(Hotel::class, PermissionEnum::HOTEL_CREATE->value);
+
         try {
             DB::beginTransaction();
 
@@ -88,7 +102,10 @@ class HotelController extends Controller
      */
     public function show(Hotel $hotel)
     {
+        $this->authorizeResource($hotel, PermissionEnum::HOTEL_READ->value);
+
         $hotel->with(['rooms']);
+
         return view('hotels.edit', compact('hotel'));
     }
 
@@ -97,7 +114,10 @@ class HotelController extends Controller
      */
     public function edit(Hotel $hotel)
     {
+        $this->authorizeResource($hotel, PermissionEnum::HOTEL_UPDATE->value);
+
         $hotel->with(['rooms']);
+
         return view('hotels.edit', compact('hotel'));
     }
 
@@ -106,6 +126,8 @@ class HotelController extends Controller
      */
     public function update(UpdateHotelRequest $request, Hotel $hotel)
     {
+        $this->authorizeResource($hotel, PermissionEnum::HOTEL_UPDATE->value);
+
         try {
             DB::beginTransaction();
 
@@ -149,8 +171,12 @@ class HotelController extends Controller
      */
     public function destroy(Hotel $hotel)
     {
+        $this->authorize($hotel, PermissionEnum::HOTEL_DELETE->value);
+
         $hotel->delete();
 
-        return redirect()->route('hotels.index');
+        $hotels = Hotel::with(['rooms'])->paginate();
+
+        return response()->json($hotels);
     }
 }

@@ -6,9 +6,7 @@ import DropdownLink from "@/Components/DropdownLink.vue";
 const currentLocale = usePage().props.locale;
 
 const switchLocale = async (lang) => {
-    locale = lang;
     await axios.get(route("locale", lang));
-    await window.handleCurrentLocale();
     location.reload();
 };
 </script>

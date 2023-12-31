@@ -4,23 +4,18 @@ return [
     'permission' => 'Permissão',
     'permissions' => 'Permissões',
 
-    'users-list' => 'Listar usuários',
+    'users-read' => 'Ver usuários',
     'users-create' => 'Criar usuários',
     'users-update' => 'Editar usuários',
     'users-delete' => 'Excluir usuários',
 
-    'roles-list' => 'Listar regras',
-    'roles-create' => 'Criar regras',
-    'roles-update' => 'Editar regras',
-    'roles-delete' => 'Excluir regras',
-
-    'hotels-list' => 'Listar hotéis',
+    'hotels-read' => 'Ver hotéis',
     'hotels-create' => 'Criar hotéis',
     'hotels-update' => 'Editar hotéis',
     'hotels-delete' => 'Excluir hotéis',
 
-    'teams-list' => 'Listar equipe',
-    'teams-create' => 'Criar equipe',
-    'teams-update' => 'Editar equipe',
-    'teams-delete' => 'Excluir equipe',
+    'teams-read' => 'Ver equipes',
+    'teams-create' => 'Criar equipes',
+    'teams-update' => 'Editar equipes',
+    'teams-delete' => 'Excluir equipes',
 ];

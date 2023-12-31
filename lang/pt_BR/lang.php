@@ -130,6 +130,7 @@ return [
     'hello' => 'Olá',
     'regards' => 'Cumprimentos',
     'open_in_browser' => 'Se você estiver tendo problemas para clicar no botão ":actionText", copie e cole o URL abaixo em seu navegador:',
+    'delete_successfully' => 'Registro excluído com sucesso.',
     'pages' => [
         'profile' => [
             'title' => 'Informações do perfil',

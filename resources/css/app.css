@@ -1,4 +1,5 @@
 @import "sweetalert2/dist/sweetalert2.css";
+@import "vue3-toastify/dist/index.css";
 
 @tailwind base;
 @tailwind components;
@@ -6,6 +7,14 @@
 
 [x-cloak] {
     display: none;
+}
+
+.Toastify__toast {
+    @apply !mr-4 !mt-56 sm:!mt-24;
+}
+
+.Toastify__toast-theme--dark {
+    @apply dark:!bg-gray-800;
 }
 
 .swal2-question {

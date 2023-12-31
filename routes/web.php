@@ -38,41 +38,12 @@ Route::get('/locales/{locale}', function ($locale) {
 })->name('locale');
 
 Route::get('/current-locale', function () {
-    $messages = [];
-    foreach (glob(base_path('lang/**')) as $localePath) {
-        $exp = explode(DIRECTORY_SEPARATOR, $localePath);
-        $locale = array_pop($exp);
-        foreach (glob(base_path('lang/' . $locale) . "/*.php") as $filepath) {
-            $exp = explode(DIRECTORY_SEPARATOR, $filepath);
-            $filename = array_pop($exp);
-            $content = require_once($filepath);
-            $messages[str_replace('_', '-', $locale) . "." . substr($filename, 0, strlen($filename) - 4)] = $content;
-        }
-    }
     return response()->json([
         'locale' => session()->has('locale') ? session()->get('locale') : app()->getLocale(),
         'app_locale' => str_replace('_', '-', app()->getLocale()),
         'fallback_locale' => str_replace('_', '-', config('app.fallback_locale')),
-        'messages' => $messages,
     ]);
 })->name('current-locale');
-
-Route::get('/locale/messages.js', function () {
-    $locales = [];
-    foreach (glob(base_path('lang/**')) as $localePath) {
-        $exp = explode(DIRECTORY_SEPARATOR, $localePath);
-        $locale = array_pop($exp);
-        foreach (glob(base_path('lang/' . $locale) . "/*.php") as $filepath) {
-            $exp = explode(DIRECTORY_SEPARATOR, $filepath);
-            $filename = array_pop($exp);
-            $content = require_once($filepath);
-            $locales[str_replace('_', '-', $locale) . "." . substr($filename, 0, strlen($filename) - 4)] = $content;
-        }
-    }
-    $content = 'const messages = ' . json_encode($locales, JSON_PRETTY_PRINT);
-    return response($content)
-        ->header('Content-Type', 'text/javascript');
-})->name('locale-js');
 
 Route::middleware([
     'auth:sanctum',
@@ -82,12 +53,6 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
-
-    Route::controller(\App\Http\Controllers\RoomController::class)
-        ->prefix('rooms')
-        ->group(function () {
-            Route::get('/{room}/edit', 'edit')->name('rooms.edit');
-        });
 
     Route::controller(\App\Http\Controllers\RoomController::class)
         ->prefix('rooms')
